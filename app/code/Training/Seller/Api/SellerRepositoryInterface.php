@@ -1,4 +1,8 @@
 <?php
+/**
+ * Magento 2 Training Project
+ * Module Training/Seller
+ */
 namespace Training\Seller\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
@@ -40,7 +44,7 @@ interface SellerRepositoryInterface
      *
      * @return \Training\Seller\Api\Data\SellerSearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $searchCriteria);
+    public function getList(SearchCriteriaInterface $searchCriteria = null);
 
     /**
      * save a seller

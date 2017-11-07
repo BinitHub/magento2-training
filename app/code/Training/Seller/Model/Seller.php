@@ -1,14 +1,47 @@
 <?php
+/**
+ * Magento 2 Training Project
+ * Module Training/Seller
+ */
 namespace Training\Seller\Model;
-class Seller extends \Magento\Framework\Model\AbstractModel implements \Training\Seller\Api\Data\SellerInterface, \Magento\Framework\DataObject\IdentityInterface
+
+use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Model\AbstractModel;
+use Training\Seller\Api\Data\SellerInterface;
+
+/**
+ * Seller Model
+ *
+ * @author    Laurent MINGUET <lamin@smile.fr>
+ * @copyright 2016 Smile
+ */
+class Seller extends AbstractModel implements SellerInterface, IdentityInterface
 {
+    /**
+     * Seller cache tag
+     */
     const CACHE_TAG = 'training_seller';
 
+    /**
+     * @var string
+     */
+    protected $_cacheTag = 'training_seller';
+
+    /**
+     * Magento Constructor
+     *
+     * @return void
+     */
     protected function _construct()
     {
         $this->_init('Training\Seller\Model\ResourceModel\Seller');
     }
 
+    /**
+     * Get identities
+     *
+     * @return array
+     */
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG . '_' . $this->getIdentifier()];
@@ -19,7 +52,7 @@ class Seller extends \Magento\Framework\Model\AbstractModel implements \Training
      */
     public function getSellerId()
     {
-        return $this->getData(self::FIELD_SELLER_ID);
+        return $this->getId();
     }
 
     /**
