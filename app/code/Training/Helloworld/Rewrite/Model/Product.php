@@ -26,6 +26,6 @@ class Product extends \Magento\Catalog\Model\Product
      */
     public function getName()
     {
-        return parent::getName() . ' (This is a rewrite of native method getName)';
+        return parent::getName();
     }
 }
