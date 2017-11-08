@@ -1,45 +1,27 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: training
- * Date: 11/6/17
- * Time: 2:43 PM
- */
-/**
  * Magento 2 Training Project
- * Module Training/Helloworld
+ * Module Training/Seller
  */
 namespace Training\Seller\Controller\Seller;
 
-use Magento\Framework\App\Action\Context;
-use Training\Seller\Api\SellerRepositoryInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Result\Page;
+
 /**
- * Action: Index/Index
+ * Action : seller/view
  *
- * @author
-Laurent MINGUET <lamin@smile.fr>
+ * @author    Laurent MINGUET <lamin@smile.fr>
  * @copyright 2016 Smile
  */
-class View extends \Magento\Framework\App\Action\Action
+class View extends AbstractAction
 {
-    /**
-     * @var SellerRepositoryInterface
-     */
-    protected $sellerRepository;
-
-    public function __construct(
-        Context                   $context,
-        SellerRepositoryInterface $sellerRepository
-    ) {
-        $this->sellerRepository      = $sellerRepository;
-
-        parent::__construct($context);
-    }
     /**
      * Execute the action
      *
-     * @return void
+     * @return ResultInterface|null
      */
     public function execute()
     {
@@ -58,10 +40,13 @@ class View extends \Magento\Framework\App\Action\Action
             return null;
         }
 
-        echo '<h1>'.$seller->getName().'</h1>';
-        echo '<hr />';
-        echo '<p>#'.$seller->getIdentifier().'</p>';
-        echo '<hr />';
-        echo '<a href="/sellers.html">back to the list</a>';
+        $this->registry->register('current_seller', $seller);
+
+        // display the page using the layout
+        /** @var Page $resultPage */
+        $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        $resultPage->getConfig()->getTitle()->set(__('Seller "%1"', $seller->getName()));
+
+        return $resultPage;
     }
 }

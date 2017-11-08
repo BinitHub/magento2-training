@@ -7,9 +7,9 @@ namespace Training\Seller\Controller\Adminhtml\Seller;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Result\PageFactory;
 use Training\Seller\Model\SellerFactory;
-use Magento\Framework\Api\SearchCriteriaBuilder;
-use Training\Seller\Api\SellerRepositoryInterface;
 
 /**
  * Abstract Admin action for seller
@@ -20,33 +20,39 @@ use Training\Seller\Api\SellerRepositoryInterface;
 abstract class AbstractAction extends Action
 {
     /**
-     * Model Factory
-     *
+     * @var \Magento\Framework\Registry
+     */
+    protected $coreRegistry;
+
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    protected $resultPageFactory;
+
+    /**
      * @var \Training\Seller\Model\SellerFactory
      */
     protected $modelFactory;
-
-    protected $searchCriteriaBuilder;
-
-    protected $sellerRepository;
 
     /**
      * PHP Constructor
      *
      * @param \Magento\Backend\App\Action\Context          $context
+     * @param \Magento\Framework\Registry                  $coreRegistry
+     * @param \Magento\Framework\View\Result\PageFactory   $pageFactory
      * @param \Training\Seller\Model\SellerFactory         $modelFactory
      */
     public function __construct(
         Context $context,
-        SellerFactory $modelFactory,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        SellerRepositoryInterface $sellerRepository
+        Registry $coreRegistry,
+        PageFactory $pageFactory,
+        SellerFactory $modelFactory
     ) {
-        $this->sellerRepository      = $sellerRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->modelFactory        = $modelFactory;
-
         parent::__construct($context);
+
+        $this->coreRegistry        = $coreRegistry;
+        $this->resultPageFactory   = $pageFactory;
+        $this->modelFactory        = $modelFactory;
     }
 
     /**
@@ -57,5 +63,32 @@ abstract class AbstractAction extends Action
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Training_Seller::manage');
+    }
+
+    /**
+     * Init the current model
+     *
+     * @return \Training\Seller\Model\Seller
+     */
+    protected function initModel()
+    {
+        // Get the ID
+        $modelId = (int) $this->getRequest()->getParam('seller_id');
+
+        /** @var \Training\Seller\Model\Seller $model */
+        $model = $this->modelFactory->create();
+
+        // Initial checking
+        if ($modelId) {
+            $model->getResource()->load($model, $modelId);
+            if (!$model->getId()) {
+                return null;
+            }
+        }
+
+        // Register model to use later in blocks
+        $this->coreRegistry->register('current_seller', $model);
+
+        return $model;
     }
 }

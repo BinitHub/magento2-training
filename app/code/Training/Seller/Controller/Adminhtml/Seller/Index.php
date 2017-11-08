@@ -16,21 +16,16 @@ class Index extends AbstractAction
     /**
      * Execute the action
      *
-     * @return void
+     * @return \Magento\Framework\View\Result\Page
      */
     public function execute()
     {
-        $searchCriteria = $this->searchCriteriaBuilder->create();
+        $breadMain = __('Manage Sellers');
 
-        // get the list of the sellers
-        $list = $this->sellerRepository->getList($searchCriteria);
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu('Training_Seller::manage');
+        $resultPage->getConfig()->getTitle()->prepend($breadMain);
 
-        $model = $this->modelFactory->create();
-        $model->getResource()->load($model, 1);
-        echo '<pre>';
-        print_r($list->getTotalCount());
-        echo '<br>';
-        print_r($model->getData());
-        echo '</pre>';
+        return $resultPage;
     }
 }
