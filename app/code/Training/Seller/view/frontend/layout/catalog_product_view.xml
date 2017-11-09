@@ -10,5 +10,13 @@
                 <argument name="border_color" xsi:type="string">#AADDAA</argument>
             </arguments>
         </referenceBlock>
+
+        <referenceBlock name="product.info.details">
+            <block class="Training\Seller\Block\Product\Sellers" group="detailed_info" name="product.info.details.seller" template="product/sellers.phtml" >
+                <arguments>
+                    <argument name="title" xsi:type="string" translate="true">Sellers</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
     </body>
 </page>

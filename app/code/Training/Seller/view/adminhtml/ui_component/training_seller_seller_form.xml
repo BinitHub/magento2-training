@@ -17,7 +17,6 @@
             <item name="save"              xsi:type="string">Training\Seller\Block\Adminhtml\Seller\Edit\SaveButton</item>
             <item name="save_and_continue" xsi:type="string">Training\Seller\Block\Adminhtml\Seller\Edit\SaveAndContinueButton</item>
         </item>
-        <item name="acl" xsi:type="string">Training_Seller::manage</item>
     </argument>
     <dataSource name="seller_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
@@ -81,6 +80,29 @@
                     <item name="dataScope" xsi:type="string">name</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="description">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string">Description</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="dataType" xsi:type="string">textarea</item>
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+                    <item name="formElement" xsi:type="string">wysiwyg</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
+                    <item name="source" xsi:type="string">seller</item>
+                    <item name="dataScope" xsi:type="string">description</item>
+                    <item name="validation" xsi:type="array">
                     </item>
                 </item>
             </argument>
