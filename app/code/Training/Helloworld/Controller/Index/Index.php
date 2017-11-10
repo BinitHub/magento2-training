@@ -26,6 +26,7 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        $this->getResponse()->appendBody('Hello World !');
+        $title = __('Hello World !');
+        $this->getResponse()->appendBody($title);
     }
 }

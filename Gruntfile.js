@@ -11,7 +11,7 @@ module.exports = function (grunt) {
     var _ = require('underscore'),
         path = require('path'),
         themes = require('./dev/tools/grunt/configs/themes'),
-        themesSmile = require('./dev/tools/grunt/configs/themes.smile'),
+        themesSmile = require('./dev/tools/grunt/configs/theme.smile'),
         configDir = './dev/tools/grunt/configs',
         tasks = grunt.file.expand('./dev/tools/grunt/tasks/*');
 

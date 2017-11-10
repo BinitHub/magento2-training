@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    my_project_theme: {
+    custom: {
         area: 'frontend',
         name: 'Training/custom',
         locale: 'en_US',
